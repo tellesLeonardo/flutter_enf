@@ -4,13 +4,8 @@ A new Flutter project.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+baixe o projeto e adicione no seu VScode a extensão devcontainer depois só apertar `Ctrl + shift + P` e colocar a opção `Dev containers: Open Folder in Container` e abrir a pasta do projeto e esperar o build 
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## compilaçao do flutter
+para executar o projeto so acessar a pasta `cd framingham` e executar `flutter run`.
+caso tenha dado erro execute o `flutter pub get` e depois o `flutter doctor` e finaliza com o `flutter run` 
