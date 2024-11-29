@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'framingham_form.dart';
+import 'framingham_data.dart';
+import 'framingham_form_female.dart';
 
 void main() {
   runApp(const FraminghamApp());
@@ -33,158 +36,152 @@ class _ToggleScreenState extends State<ToggleScreen> {
   @override
   void initState() {
     super.initState();
-    isMale =
-        widget.showMaleScreen; // Inicialize com o valor fornecido pelo widget
+    isMale = widget.showMaleScreen;
   }
-
-  // 'MULHERES'
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: isMale ? Colors.blue[100] : Colors.pink[100],
-      body: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            color: isMale
-                ? const Color.fromARGB(255, 6, 36, 82)
-                : const Color.fromARGB(255, 255, 0, 127),
-            padding: const EdgeInsets.all(16.0),
-            child: const Center(
-              child: Text(
-                'PREVENÇÃO CLÍNICA DE DOENÇA CARDIOVASCULAR, CEREBROVASCULAR E RENAL CRÔNICA',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+      body: SingleChildScrollView( // Envolva o corpo com SingleChildScrollView
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: double.infinity,
+              color: isMale
+                  ? const Color.fromARGB(255, 6, 36, 82)
+                  : const Color.fromARGB(255, 255, 0, 127),
+              padding: const EdgeInsets.all(16.0),
+              child: const Center(
+                child: Text(
+                  'PREVENÇÃO CLÍNICA DE DOENÇA CARDIOVASCULAR, CEREBROVASCULAR E RENAL CRÔNICA',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
-          ),
-          Container(
-            margin:
-                const EdgeInsets.only(top: 16.0), // Adicionando margin no topo
-            child: const Text('ESCORE DE FRAMINGHAM (REVISADO)',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                )),
-          ),
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Center(
-              child: Text(
-                isMale ? 'HOMENS' : 'MULHERES',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Color.fromARGB(255, 8, 41, 90),
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
+            Container(
+              margin: const EdgeInsets.only(top: 16.0),
+              child: const Text('ESCORE DE FRAMINGHAM (REVISADO)',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  )),
+            ),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Center(
+                child: Text(
+                  isMale ? 'HOMENS' : 'MULHERES',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: const Color.fromARGB(255, 8, 41, 90),
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
-          ),
-          Expanded(
-            child: Row(
+            // Usando Wrap para comportar as tabelas uma ao lado da outra
+            Wrap(
+              spacing: 16.0, // Espaço entre as tabelas
+              runSpacing: 16.0, // Espaço entre as linhas
               children: [
-                // Primeira Coluna
-                Expanded(
-                  child: Container(
-                    child: isMale
-                        ? FraminghamTableScreen(mychildren: [
-                            SectionTable('Tabela homen 1'),
-                            SectionTable('Tabela homen 2')
-                          ])
-                        : FraminghamTableScreen(mychildren: [
-                            SectionTable('Tabela mulher 1'),
-                            SectionTable('Tabela mulher 2')
-                          ]),
-                  ),
+                Container(
+                  child:  isMale ? DataTableWidget(MaleData.agePointsTable, 'Tabela de Idade') : DataTableWidget(FemaleData.agePointsTable, 'Tabela de Idade'),
                 ),
-                // Segunda Coluna
-                Expanded(
-                  child: Container(
-                    child: isMale
-                        ? FraminghamTableScreen(
-                            mychildren: [SectionTable('Tabela homen 3')])
-                        : FraminghamTableScreen(
-                            mychildren: [SectionTable('Tabela mulher 3')]),
-                  ),
+                Container(
+                  child: isMale ? DataTableWidget(MaleData.ldlCholesterolTable, 'LDL- colesterol') : DataTableWidget(FemaleData.ldlCholesterolTable, 'LDL- colesterol'),
                 ),
+                Container(
+                  child: isMale ? DataTableWidget(MaleData.hdlCholesterolTable, 'HDL- colesterol') : DataTableWidget(FemaleData.hdlCholesterolTable, 'HDL- colesterol'),
+                ),
+                Container(
+                  child: isMale ? DataTableWidget(MaleData.diabetesTable, 'Tabela Diabetes') : DataTableWidget(FemaleData.diabetesTable, 'Tabela Diabetes'),
+                ),
+                Container(
+                  child: isMale ? DataTableWidget(MaleData.smokingTable, 'Tabela Tabagismo') : DataTableWidget(FemaleData.smokingTable, 'Tabela Tabagismo'),
+                ),
+                Container(
+                  child: isMale ? DataTableWidget(MaleData.bloodPressureTable, 'Pressão Sistólica (mmHg) | Pressão Diastólica (mmHg)') : DataTableWidget(FemaleData.bloodPressureTable, 'Pressão Sistólica (mmHg) | Pressão Diastólica (mmHg)'),
+                ),
+                Container(
+                  child: isMale ? DataTableWidget(MaleData.sumPointsTable, 'Tabela probabilidades') : DataTableWidget(FemaleData.sumPointsTable, 'Tabela probabilidades'),
+                ),
+                // Adicione mais tabelas se necessário
               ],
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  isMale = !isMale;
-                });
-              },
-              child: Text(isMale ? 'Tabela Homens' : 'Tabela Mulheres'),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16.0),
+              child: FraminghamForm(),
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    isMale = !isMale;
+                  });
+                },
+                child: Text(isMale ? 'Mudar para Tabela Mulheres' : 'Mudar para Tabela Homens'),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
-class FraminghamTableScreen extends StatelessWidget {
-  late List<SectionTable> mychildren;
 
-  // Construtor com parâmetro
-  FraminghamTableScreen({Key? key, required this.mychildren}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: mychildren,
-    );
-  }
-}
+class DataTableWidget extends StatelessWidget {
+  final List<List<String>> data;
+  final String tableTitle;
 
-class PlaceholderWidget extends StatelessWidget {
-  final String text;
-
-  const PlaceholderWidget({Key? key, required this.text}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        text,
-        style: const TextStyle(
-            fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black54),
-        textAlign: TextAlign.center,
-      ),
-    );
-  }
-}
-
-// Widget para cada tabela
-// precisa ser contruido para criar as tabelas com valores que vem de fora
-class SectionTable extends StatelessWidget {
-  final String title;
-
-  const SectionTable(this.title, {Key? key}) : super(key: key);
+  DataTableWidget(this.data, this.tableTitle);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12.0),
-      child: Text(
-        title,
-        style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Color.fromARGB(255, 0, 0, 0)),
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                tableTitle,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+            // Adicionando SingleChildScrollView para rolagem horizontal
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal, // Permite rolar horizontalmente
+              child: DataTable(
+                columns: data[0].map((column) {
+                  return DataColumn(label: Text(column));
+                }).toList(),
+                rows: data.sublist(1).map((row) {
+                  return DataRow(
+                    cells: row.map((cell) {
+                      return DataCell(Text(cell));
+                    }).toList(),
+                  );
+                }).toList(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
