@@ -43,7 +43,7 @@ class _ToggleScreenState extends State<ToggleScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: isMale ? Colors.blue[100] : Colors.pink[100],
-      body: SingleChildScrollView( // Envolva o corpo com SingleChildScrollView
+      body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -89,40 +89,6 @@ class _ToggleScreenState extends State<ToggleScreen> {
                 ),
               ),
             ),
-            // Usando Wrap para comportar as tabelas uma ao lado da outra
-            Wrap(
-              spacing: 16.0, // Espaço entre as tabelas
-              runSpacing: 16.0, // Espaço entre as linhas
-              children: [
-                Container(
-                  child:  isMale ? DataTableWidget(MaleData.agePointsTable, 'Tabela de Idade') : DataTableWidget(FemaleData.agePointsTable, 'Tabela de Idade'),
-                ),
-                Container(
-                  child: isMale ? DataTableWidget(MaleData.ldlCholesterolTable, 'LDL- colesterol') : DataTableWidget(FemaleData.ldlCholesterolTable, 'LDL- colesterol'),
-                ),
-                Container(
-                  child: isMale ? DataTableWidget(MaleData.hdlCholesterolTable, 'HDL- colesterol') : DataTableWidget(FemaleData.hdlCholesterolTable, 'HDL- colesterol'),
-                ),
-                Container(
-                  child: isMale ? DataTableWidget(MaleData.diabetesTable, 'Tabela Diabetes') : DataTableWidget(FemaleData.diabetesTable, 'Tabela Diabetes'),
-                ),
-                Container(
-                  child: isMale ? DataTableWidget(MaleData.smokingTable, 'Tabela Tabagismo') : DataTableWidget(FemaleData.smokingTable, 'Tabela Tabagismo'),
-                ),
-                Container(
-                  child: isMale ? DataTableWidget(MaleData.bloodPressureTable, 'Pressão Sistólica (mmHg) | Pressão Diastólica (mmHg)') : DataTableWidget(FemaleData.bloodPressureTable, 'Pressão Sistólica (mmHg) | Pressão Diastólica (mmHg)'),
-                ),
-                Container(
-                  child: isMale ? DataTableWidget(MaleData.sumPointsTable, 'Tabela probabilidades') : DataTableWidget(FemaleData.sumPointsTable, 'Tabela probabilidades'),
-                ),
-                // Adicione mais tabelas se necessário
-              ],
-            ),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(16.0),
-              child: FraminghamForm(),
-            ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: ElevatedButton(
@@ -131,8 +97,72 @@ class _ToggleScreenState extends State<ToggleScreen> {
                     isMale = !isMale;
                   });
                 },
-                child: Text(isMale ? 'Mudar para Tabela Mulheres' : 'Mudar para Tabela Homens'),
+                child: Text(isMale
+                    ? 'Mudar para Tabela Mulheres'
+                    : 'Mudar para Tabela Homens'),
               ),
+            ),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16.0),
+              child: FraminghamForm(),
+            ),
+            // Usando Wrap para comportar as tabelas uma ao lado da outra
+            Wrap(
+              spacing: 16.0, // Espaço entre as tabelas
+              runSpacing: 16.0, // Espaço entre as linhas
+              children: [
+                Container(
+                  child: isMale
+                      ? DataTableWidget(
+                          MaleData.agePointsTable, 'Tabela de Idade')
+                      : DataTableWidget(
+                          FemaleData.agePointsTable, 'Tabela de Idade'),
+                ),
+                Container(
+                  child: isMale
+                      ? DataTableWidget(
+                          MaleData.ldlCholesterolTable, 'LDL- colesterol')
+                      : DataTableWidget(
+                          FemaleData.ldlCholesterolTable, 'LDL- colesterol'),
+                ),
+                Container(
+                  child: isMale
+                      ? DataTableWidget(
+                          MaleData.hdlCholesterolTable, 'HDL- colesterol')
+                      : DataTableWidget(
+                          FemaleData.hdlCholesterolTable, 'HDL- colesterol'),
+                ),
+                Container(
+                  child: isMale
+                      ? DataTableWidget(
+                          MaleData.diabetesTable, 'Tabela Diabetes')
+                      : DataTableWidget(
+                          FemaleData.diabetesTable, 'Tabela Diabetes'),
+                ),
+                Container(
+                  child: isMale
+                      ? DataTableWidget(
+                          MaleData.smokingTable, 'Tabela Tabagismo')
+                      : DataTableWidget(
+                          FemaleData.smokingTable, 'Tabela Tabagismo'),
+                ),
+                Container(
+                  child: isMale
+                      ? DataTableWidget(MaleData.bloodPressureTable,
+                          'Pressão Sistólica (mmHg) | Pressão Diastólica (mmHg)')
+                      : DataTableWidget(FemaleData.bloodPressureTable,
+                          'Pressão Sistólica (mmHg) | Pressão Diastólica (mmHg)'),
+                ),
+                Container(
+                  child: isMale
+                      ? DataTableWidget(
+                          MaleData.sumPointsTable, 'Tabela probabilidades')
+                      : DataTableWidget(
+                          FemaleData.sumPointsTable, 'Tabela probabilidades'),
+                ),
+                // Adicione mais tabelas se necessário
+              ],
             ),
           ],
         ),
@@ -140,8 +170,6 @@ class _ToggleScreenState extends State<ToggleScreen> {
     );
   }
 }
-
-
 
 class DataTableWidget extends StatelessWidget {
   final List<List<String>> data;
